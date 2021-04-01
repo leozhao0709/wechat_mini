@@ -1,0 +1,7 @@
+{
+  "watch": [
+    "miniprogram"
+  ],
+  "ext": "ts",
+  "exec": "yarn run tsc"
+}

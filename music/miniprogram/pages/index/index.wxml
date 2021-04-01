@@ -1,6 +1,6 @@
-<!--index.wxml-->
+<!-- index.wxml -->
 <view class="container">
-  <view class="userinfo">
+  <!-- <view class="userinfo">
     <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
       <view class="userinfo-avatar" bindtap="bindViewTap">
         <open-data type="userAvatarUrl"></open-data>
@@ -18,6 +18,25 @@
     </block>
   </view>
   <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+    <text class="user-motto" bindtap="gotoLog">{{motto}}</text>
+    <button bindtap="getUserProfile">Get User Profile</button>
+  </view> -->
+  <swiper class="banners" indicator-dots autoplay interval="{{3000}}" duration="{{500}}" indicator-color="ivory" indicator-active-color="#d43c33">
+    <swiper-item>
+      <image src="/static/images/nvsheng.jpg" />
+    </swiper-item>
+    <swiper-item>
+      <image src="/static/images/nvsheng.jpg" />
+    </swiper-item>
+    <swiper-item>
+      <image src="/static/images/nvsheng.jpg" />
+    </swiper-item>
+  </swiper>
+  <swiper indicator-dots="{{true}}">
+    <block wx:for="{{imgUrls}}">
+      <swiper-item>
+        <image class="swiper-image" src="{{item}}" />
+      </swiper-item>
+    </block>
+  </swiper>
 </view>
