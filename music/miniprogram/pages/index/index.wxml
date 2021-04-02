@@ -1,42 +1,52 @@
 <!-- index.wxml -->
 <view class="container">
-  <!-- <view class="userinfo">
-    <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
-      <view class="userinfo-avatar" bindtap="bindViewTap">
-        <open-data type="userAvatarUrl"></open-data>
-      </view>
-      <open-data type="userNickName"></open-data>
-    </block>
-    <block wx:elif="{{!hasUserInfo}}">
-      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-      <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
-    </block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto" bindtap="gotoLog">{{motto}}</text>
-    <button bindtap="getUserProfile">Get User Profile</button>
-  </view> -->
   <swiper class="banners" indicator-dots autoplay interval="{{3000}}" duration="{{500}}" indicator-color="ivory" indicator-active-color="#d43c33">
-    <swiper-item>
-      <image src="/static/images/nvsheng.jpg" />
-    </swiper-item>
-    <swiper-item>
-      <image src="/static/images/nvsheng.jpg" />
-    </swiper-item>
-    <swiper-item>
-      <image src="/static/images/nvsheng.jpg" />
-    </swiper-item>
-  </swiper>
-  <swiper indicator-dots="{{true}}">
-    <block wx:for="{{imgUrls}}">
+    <block wx:for="{{bannerList}}" wx:key="bannerId">
       <swiper-item>
-        <image class="swiper-image" src="{{item}}" />
+        <image class="swiper-image" src="{{item.pic}}" />
       </swiper-item>
     </block>
   </swiper>
+  <!-- nav -->
+  <view class="navContainer">
+    <view class="navItem">
+      <text class="iconfont icon-meirituijian"></text>
+      <text>每日推荐</text>
+    </view>
+    <view class="navItem">
+      <text class="iconfont icon-gedan1"></text>
+      <text>歌单</text>
+    </view>
+    <view class="navItem">
+      <text class="iconfont icon-icon-ranking"></text>
+      <text>排行榜</text>
+    </view>
+    <view class="navItem">
+      <text class="iconfont icon-diantai"></text>
+      <text>电台</text>
+    </view>
+    <view class="navItem">
+      <text class="iconfont icon-zhiboguankanliangbofangsheyingshexiangjixianxing"></text>
+      <text>直播</text>
+    </view>
+  </view>
+  <!-- recommend -->
+  <view class="recommendContainer">
+    <view class="header">
+      <text class="title">推荐歌曲</text>
+      <view>
+        <text>为你精心推荐</text>
+        <text class="more">查看更多</text>
+      </view>
+    </view>
+    <!-- content -->
+    <scroll-view class="recommendScroll" enable-flex scroll-x>
+      <block wx:for="{{recommendList}}" wx:key="id">
+        <view class="scrollItem">
+          <image src="{{item.picUrl}}" />
+          <text>{{item.name}}</text>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
 </view>
