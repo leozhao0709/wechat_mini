@@ -9,9 +9,10 @@ Page({
   data: {
     bannerList: [] as Banner[],
     recommendList: [] as Recommend[],
+    topList: [] as Playlist[],
   },
 
-  onLoad() {
+  async onLoad() {
     httpUtils
       .get<{ banners: Banner[] }>('/banner', { type: 2 })
       .then((res) =>
@@ -27,5 +28,15 @@ Page({
           recommendList: res.data.result,
         });
       });
+
+    const topListCount = 5;
+    for (let i = 0; i < topListCount; i++) {
+      const res = await httpUtils.get<TopListData>('/top/list', { idx: i });
+      const topListData = res.data;
+      const playlist: Playlist = { name: topListData.playlist.name, tracks: topListData.playlist.tracks.slice(0, 3) };
+      this.setData({
+        topList: [...this.data.topList, playlist],
+      });
+    }
   },
 });

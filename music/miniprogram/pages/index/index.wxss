@@ -38,30 +38,14 @@
   font-size: 26rpx;
 }
 
-.recommendContainer {
+.recommendContainer,
+.topList {
   padding: 20rpx;
-}
-
-.recommendContainer .header {
-  margin-bottom: 20rpx;
-}
-
-.recommendContainer .header .title {
-  font-size: 32rpx;
-  line-height: 80rpx;
-  color: #666;
-}
-
-.recommendContainer .header .more {
-  float: right;
-  border: 1rpx solid #333;
-  padding: 10rpx 20rpx;
-  font-size: 24rpx;
-  border-radius: 30rpx;
 }
 
 .recommendScroll {
   display: flex;
+  height: 300rpx;
 }
 
 .scrollItem {
@@ -82,4 +66,48 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+/* ranking area */
+
+.topList .topListSwiper {
+  height: 400rpx;
+}
+
+.topList .swiperItem {
+  background-color: #ededed;
+  width: 96%;
+}
+
+.topList .swiperItem .title {
+  font-size: 30rpx;
+}
+
+.topList .musicItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.topList .musicItem image {
+  min-width: 100rpx;
+  max-width: 100rpx;
+  height: 100rpx;
+  border-radius: 6rpx;
+}
+
+.topList .musicItem .count {
+  min-width: 100rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+}
+
+.topList .musicItem .musicName {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 100rpx;
+  max-width: 100%;
+  line-height: 100rpx;
 }

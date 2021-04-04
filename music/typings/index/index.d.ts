@@ -8,3 +8,16 @@ type Recommend = {
   picUrl: string;
   name: string;
 };
+
+type Playlist = {
+  name: string;
+  tracks: {
+    id: string;
+    name: string;
+    al: { picUrl: string };
+  }[];
+};
+
+type TopListData = {
+  playlist: Playlist;
+};
