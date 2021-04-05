@@ -1,4 +1,7 @@
 // mock account phone=15711140593&password=123456yzy
+
+import httpUtils from '../../utils/httpUtils';
+
 //Page Object
 Page({
   data: {
@@ -29,15 +32,37 @@ Page({
 
     if (!phone.match(/^1[3-9]\d{9}$/)) {
       wx.showToast({
-        title: 'invalid',
+        title: 'phone invalid',
         icon: 'error',
       });
       return;
     }
 
-    wx.showToast({
-      title: 'success!',
-    });
+    httpUtils
+      .get<{ code: number }>('/login/cellphone', { phone, password })
+      .then((res) => res.data)
+      .then((res) => {
+        if (res.code === 200) {
+          wx.showToast({
+            title: 'success!',
+          });
+        } else if (res.code === 400) {
+          wx.showToast({
+            title: 'phone invalid',
+            icon: 'error',
+          });
+        } else if (res.code === 502) {
+          wx.showToast({
+            title: 'password invalid',
+            icon: 'none',
+          });
+        } else {
+          wx.showToast({
+            title: 'login failed, please try again',
+            icon: 'none',
+          });
+        }
+      });
   },
   onShow: function () {},
   onHide: function () {},
