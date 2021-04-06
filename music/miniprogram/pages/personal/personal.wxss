@@ -198,3 +198,19 @@
 .cardList .card-item .more {
   float: right;
 }
+
+/* recommend */
+.recommendScroll {
+  display: flex;
+  height: 200rpx;
+}
+
+.recommendScroll .scrollItem {
+  padding: 10rpx;
+}
+
+.recommendScroll .scrollItem image {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 10rpx;
+}

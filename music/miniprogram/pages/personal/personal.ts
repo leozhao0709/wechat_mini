@@ -1,3 +1,6 @@
+import config from '../../config/config';
+import httpUtils from '../../utils/httpUtils';
+
 let startY = 0;
 let moveY = 0;
 let moveDistance = 0;
@@ -6,6 +9,8 @@ Page({
   data: {
     coverTransform: 'translateY(0)',
     coverTransition: '',
+    userProfile: undefined as UserProfile | undefined,
+    recentPlayList: [] as RecentPlay[],
   },
   //options(Object)
   onLoad: function (options) {},
@@ -34,8 +39,31 @@ Page({
       coverTransition: 'transform 1s ease-in-out',
     });
   },
+
+  toLogin() {
+    wx.navigateTo({
+      url: '/pages/login/login',
+    });
+  },
+
   onReady: function () {},
-  onShow: function () {},
+  onShow: function () {
+    const userProfileLocal = wx.getStorageSync(config.storageKey.userProfile);
+    if (userProfileLocal) {
+      this.setData({ userProfile: userProfileLocal });
+      this.getRecentPlayList();
+    }
+  },
+  getRecentPlayList() {
+    httpUtils
+      .get<{ allData: { song: RecentPlay }[] }>('/user/record', { uid: this.data.userProfile?.userId, type: 0 })
+      .then((res) => res.data)
+      .then((res) => {
+        const recentPlayList = res.allData.slice(0, 10).map((data) => data.song);
+        console.log(recentPlayList[0].al.picUrl);
+        this.setData({ recentPlayList });
+      });
+  },
   onHide: function () {},
   onUnload: function () {},
   onPullDownRefresh: function () {},

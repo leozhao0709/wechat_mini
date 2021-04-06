@@ -1,12 +1,13 @@
 // mock account phone=15711140593&password=123456yzy
 
+import config from '../../config/config';
 import httpUtils from '../../utils/httpUtils';
 
 //Page Object
 Page({
   data: {
-    phone: '',
-    password: '',
+    phone: '15711140593',
+    password: '123456yzy',
   },
   //options(Object)
   onLoad: function (options) {},
@@ -39,12 +40,21 @@ Page({
     }
 
     httpUtils
-      .get<{ code: number }>('/login/cellphone', { phone, password })
+      .get<{ code: number; profile: UserProfile }>('/login/cellphone', { phone, password })
       .then((res) => res.data)
       .then((res) => {
         if (res.code === 200) {
           wx.showToast({
             title: 'success!',
+          });
+          wx.setStorage({
+            key: config.storageKey.userProfile,
+            data: res.profile,
+            success: () => {
+              wx.navigateBack();
+            },
+            fail: () => {},
+            complete: () => {},
           });
         } else if (res.code === 400) {
           wx.showToast({

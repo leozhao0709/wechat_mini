@@ -1,2 +1,27 @@
-<!--miniprogram/pages/video/video.wxml-->
-<text>miniprogram/pages/video/video.wxml</text>
+<!-- miniprogram/pages/video/video.wxml -->
+<view class="videoContainer">
+  <!-- header -->
+  <view class="header">
+    <image src="/static/images/video/video.jpg" />
+    <view class="search">搜索商品</view>
+    <image src="/static/images/logo.png" />
+  </view>
+  <!-- nav -->
+  <view class="nav">
+    <scroll-view class="navScroll" scroll-x enable-flex>
+      <!-- <block wx:for="{{items}}">
+        
+      </block> -->
+      <view class="scrollItem">推荐</view>
+      <view class="scrollItem active">万有引力</view>
+      <view class="scrollItem">推荐</view>
+      <view class="scrollItem">万有引力</view>
+      <view class="scrollItem">推荐</view>
+      <view class="scrollItem">万有引力</view>
+      <view class="scrollItem">推荐</view>
+      <view class="scrollItem">万有引力</view>
+      <view class="scrollItem">推荐</view>
+      <view class="scrollItem">万有引力</view>
+    </scroll-view>
+  </view>
+</view>
