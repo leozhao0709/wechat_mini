@@ -21,11 +21,11 @@ const httpUtils = {
     });
   },
 
-  get: <T extends { code: number }>(url: string, data = {}) => {
+  get: <T>(url: string, data = {}) => {
     return httpUtils.request<T>(url, 'GET', data);
   },
 
-  post: <T extends { code: number }>(url: string, data = {}) => {
+  post: <T>(url: string, data = {}) => {
     return httpUtils.request<T>(url, 'POST', data);
   },
 

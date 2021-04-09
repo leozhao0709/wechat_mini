@@ -2,27 +2,24 @@
 
 import httpUtils from '../../utils/httpUtils';
 
-// 获取应用实例
-const app = getApp<IAppOption>();
-
 Page({
   data: {
-    bannerList: [] as Banner[],
-    recommendList: [] as Recommend[],
-    topList: [] as Playlist[],
+    bannerList: [] as IndexPage.Banner[],
+    recommendList: [] as IndexPage.Recommend[],
+    topList: [] as IndexPage.Playlist[],
   },
 
   async onLoad() {
     httpUtils
-      .get<{ banners: Banner[] }>('/banner', { type: 2 })
+      .get<{ banners: IndexPage.Banner[] }>('/banner', { type: 2 })
       .then((res) =>
         this.setData({
-          bannerList: res.data.banners as Banner[],
+          bannerList: res.data.banners as IndexPage.Banner[],
         })
       );
 
     httpUtils
-      .get<{ result: Recommend[] }>('/personalized', { limit: 10 })
+      .get<{ result: IndexPage.Recommend[] }>('/personalized', { limit: 10 })
       .then((res) => {
         this.setData({
           recommendList: res.data.result,
@@ -31,9 +28,12 @@ Page({
 
     const topListCount = 5;
     for (let i = 0; i < topListCount; i++) {
-      const res = await httpUtils.get<TopListData>('/top/list', { idx: i });
+      const res = await httpUtils.get<IndexPage.TopListData>('/top/list', { idx: i });
       const topListData = res.data;
-      const playlist: Playlist = { name: topListData.playlist.name, tracks: topListData.playlist.tracks.slice(0, 3) };
+      const playlist: IndexPage.Playlist = {
+        name: topListData.playlist.name,
+        tracks: topListData.playlist.tracks.slice(0, 3),
+      };
       this.setData({
         topList: [...this.data.topList, playlist],
       });

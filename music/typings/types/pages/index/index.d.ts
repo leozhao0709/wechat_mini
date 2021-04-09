@@ -1,23 +1,25 @@
-type Banner = {
-  pic: string;
-  bannerId: string;
-};
+declare namespace IndexPage {
+  type Banner = {
+    pic: string;
+    bannerId: string;
+  };
 
-type Recommend = {
-  id: number;
-  picUrl: string;
-  name: string;
-};
-
-type Playlist = {
-  name: string;
-  tracks: {
-    id: string;
+  type Recommend = {
+    id: number;
+    picUrl: string;
     name: string;
-    al: { picUrl: string };
-  }[];
-};
+  };
 
-type TopListData = {
-  playlist: Playlist;
-};
+  type Playlist = {
+    name: string;
+    tracks: {
+      id: string;
+      name: string;
+      al: { picUrl: string };
+    }[];
+  };
+
+  type TopListData = {
+    playlist: Playlist;
+  };
+}
