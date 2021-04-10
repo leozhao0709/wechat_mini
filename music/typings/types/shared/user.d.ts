@@ -4,3 +4,8 @@ type UserProfile = {
   avatarUrl: string;
   backgroundUrl: string;
 };
+
+type User = {
+  token: string;
+  profile: UserProfile;
+};

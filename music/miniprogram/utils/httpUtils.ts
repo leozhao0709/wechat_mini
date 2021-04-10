@@ -4,13 +4,16 @@ const httpUtils = {
   request: <T>(
     url: string,
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' | 'HEAD' | 'TRACE' | 'CONNECT' = 'GET',
-    data = {}
+    data = {} as any
   ) => {
     return new Promise<WechatMiniprogram.RequestSuccessCallbackResult<T>>((resolve, reject) => {
       wx.request({
         url: config.host + url,
         data,
         method,
+        header: {
+          cookie: wx.getStorageSync(config.storageKey.user_cookie),
+        },
         success: (res: WechatMiniprogram.RequestSuccessCallbackResult<T>) => {
           resolve(res);
         },

@@ -10,7 +10,7 @@ Page({
     coverTransform: 'translateY(0)',
     coverTransition: '',
     userProfile: undefined as UserProfile | undefined,
-    recentPlayList: [] as RecentPlay[],
+    recentPlayList: [] as PersonalPage.RecentPlay[],
   },
   //options(Object)
   onLoad: function (options) {},
@@ -48,7 +48,7 @@ Page({
 
   onReady: function () {},
   onShow: function () {
-    const userProfileLocal = wx.getStorageSync(config.storageKey.userProfile);
+    const userProfileLocal = wx.getStorageSync(config.storageKey.user)?.profile as UserProfile | undefined;
     if (userProfileLocal) {
       this.setData({ userProfile: userProfileLocal });
       this.getRecentPlayList();
@@ -56,7 +56,10 @@ Page({
   },
   getRecentPlayList() {
     httpUtils
-      .get<{ allData: { song: RecentPlay }[] }>('/user/record', { uid: this.data.userProfile?.userId, type: 0 })
+      .get<{ allData: { song: PersonalPage.RecentPlay }[] }>('/user/record', {
+        uid: this.data.userProfile?.userId,
+        type: 0,
+      })
       .then((res) => res.data)
       .then((res) => {
         const recentPlayList = res.allData.slice(0, 10).map((data) => data.song);

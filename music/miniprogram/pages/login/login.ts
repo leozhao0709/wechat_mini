@@ -40,28 +40,34 @@ Page({
     }
 
     httpUtils
-      .get<{ code: number; profile: UserProfile }>('/login/cellphone', { phone, password })
-      .then((res) => res.data)
+      .get<{ code: number; token: string; profile: UserProfile }>('/login/cellphone', { phone, password })
       .then((res) => {
-        if (res.code === 200) {
+        const user_cookie = res.cookies.find((cookie) => cookie.startsWith('MUSIC_U='));
+        wx.setStorageSync(config.storageKey.user_cookie, user_cookie);
+        return res.data;
+      })
+      .then((res) => {
+        const { code } = res;
+        if (code === 200) {
+          const { token, profile } = res;
           wx.showToast({
             title: 'success!',
           });
           wx.setStorage({
-            key: config.storageKey.userProfile,
-            data: res.profile,
+            key: config.storageKey.user,
+            data: { token, profile },
             success: () => {
               wx.navigateBack();
             },
             fail: () => {},
             complete: () => {},
           });
-        } else if (res.code === 400) {
+        } else if (code === 400) {
           wx.showToast({
             title: 'phone invalid',
             icon: 'error',
           });
-        } else if (res.code === 502) {
+        } else if (code === 502) {
           wx.showToast({
             title: 'password invalid',
             icon: 'none',
