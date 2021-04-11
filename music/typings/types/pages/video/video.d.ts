@@ -8,6 +8,7 @@ declare namespace VideoPage {
   };
 
   type VideoItem = {
+    vid: string;
     title: string;
     coverUrl: string;
     praisedCount: number;

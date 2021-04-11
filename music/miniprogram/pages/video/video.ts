@@ -5,6 +5,8 @@ Page({
     groupList: [] as VideoPage.NavList,
     activeGroupId: 0,
     videoList: [] as VideoPage.VideoList,
+    playingVideoContext: null as null | WechatMiniprogram.VideoContext,
+    playingVideoId: '',
   },
   //options(Object)
   onLoad: function (options) {},
@@ -52,6 +54,23 @@ Page({
       mask: true,
     });
     this.loadVideoList(activeItemId).then(() => wx.hideLoading());
+  },
+
+  onPlayVideo: function (event: WechatMiniprogram.TouchEvent) {
+    const vid = event.currentTarget.id;
+
+    if (this.data.playingVideoId === vid) {
+      return;
+    }
+
+    if (this.data.playingVideoContext) {
+      this.data.playingVideoContext.stop();
+    }
+
+    this.setData({
+      playingVideoId: vid,
+      playingVideoContext: wx.createVideoContext(vid),
+    });
   },
 
   onReady: function () {},

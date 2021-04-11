@@ -20,7 +20,7 @@
   <scroll-view scroll-y class="videoScroll">
     <block wx:for="{{videoList}}" wx:key="title">
       <view class="videoItem">
-        <video class="common" src="{{item.urlInfo.url}}" />
+        <video id="{{item.vid}}" class="common" src="{{item.urlInfo.url}}" bindplay="onPlayVideo" />
         <view class="content">{{item.title}}</view>
         <view class="footer">
           <image class="avatar" src="{{item.creator.avatarUrl}}"></image>
