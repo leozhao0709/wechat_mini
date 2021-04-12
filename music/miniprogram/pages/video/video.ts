@@ -5,8 +5,8 @@ Page({
     groupList: [] as VideoPage.NavList,
     activeGroupId: 0,
     videoList: [] as VideoPage.VideoList,
-    playingVideoContext: null as null | WechatMiniprogram.VideoContext,
     playingVideoId: '',
+    videosUpdate: [] as { vid: string; currentTime: number }[],
   },
   //options(Object)
   onLoad: function (options) {},
@@ -56,20 +56,48 @@ Page({
     this.loadVideoList(activeItemId).then(() => wx.hideLoading());
   },
 
-  onPlayVideo: function (event: WechatMiniprogram.TouchEvent) {
+  onVideoPlay: function (event: WechatMiniprogram.VideoPlay) {
     const vid = event.currentTarget.id;
 
-    if (this.data.playingVideoId === vid) {
-      return;
+    const videoContext = wx.createVideoContext(vid);
+
+    const alreadyPlayingVideo = this.data.videosUpdate.find((video) => video.vid === vid);
+    if (alreadyPlayingVideo) {
+      videoContext.seek(alreadyPlayingVideo.currentTime);
     }
 
-    if (this.data.playingVideoContext) {
-      this.data.playingVideoContext.stop();
-    }
-
+    videoContext.play();
     this.setData({
       playingVideoId: vid,
-      playingVideoContext: wx.createVideoContext(vid),
+    });
+  },
+
+  onVideoTimeUpdate: function (event: WechatMiniprogram.VideoTimeUpdate) {
+    const currentTime = event.detail.currentTime;
+    const vid = event.currentTarget.id;
+    const videoToUpdate = this.data.videosUpdate.find((video) => video.vid === vid);
+
+    if (videoToUpdate) {
+      this.setData({
+        videosUpdate: this.data.videosUpdate.map((video) => {
+          if (video.vid === videoToUpdate.vid) {
+            return { ...video, currentTime };
+          }
+          return video;
+        }),
+      });
+    } else {
+      this.setData({
+        videosUpdate: [...this.data.videosUpdate, { vid, currentTime }],
+      });
+    }
+  },
+
+  onVideoEnded: function (event: WechatMiniprogram.VideoEnded) {
+    const vid = event.currentTarget.id;
+    const videosUpdate = this.data.videosUpdate.filter((video) => video.vid !== vid);
+    this.setData({
+      videosUpdate,
     });
   },
 
