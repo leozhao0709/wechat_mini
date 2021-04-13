@@ -7,6 +7,7 @@ Page({
     videoList: [] as VideoPage.VideoList,
     playingVideoId: '',
     videosUpdate: [] as { vid: string; currentTime: number }[],
+    isRefresh: false,
   },
   //options(Object)
   onLoad: function (options) {},
@@ -101,15 +102,32 @@ Page({
     });
   },
 
+  onScrollViewRefresh: function (event: WechatMiniprogram.ScrollViewRefresherRefresh) {
+    this.setData({
+      isRefresh: true,
+    });
+    this.loadVideoList(this.data.activeGroupId).then(() =>
+      this.setData({
+        isRefresh: false,
+      })
+    );
+  },
+
+  onScrollToLower: function (event: WechatMiniprogram.ScrollViewScrollToLower) {
+    console.log('...scroll To Lower...');
+  },
+
   onReady: function () {},
   onShow: function () {
     this.loadNavList().then((activeGroupId) => this.loadVideoList(activeGroupId));
   },
   onHide: function () {},
   onUnload: function () {},
-  onPullDownRefresh: function () {},
+  onPullDownRefresh: function () {
+    console.log('...pull down refresh...');
+  },
   onReachBottom: function () {},
-  onShareAppMessage: function () {},
+  onShareAppMessage: function (options: WechatMiniprogram.Page.IShareAppMessageOption) {},
   onPageScroll: function () {},
   //item(index,pagePath,text)
   onTabItemTap: function (item) {},
