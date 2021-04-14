@@ -127,7 +127,32 @@ Page({
     console.log('...pull down refresh...');
   },
   onReachBottom: function () {},
-  onShareAppMessage: function (options: WechatMiniprogram.Page.IShareAppMessageOption) {},
+  onShareAppMessage: function (options: WechatMiniprogram.Page.IShareAppMessageOption) {
+    const { from } = options;
+    if (from === 'menu') {
+      console.log('handle share logic when user using top menu to share...');
+
+      // customize shared content( optional)
+      return {
+        title: 'share from menu',
+        page: '/pages/video/video',
+        imageUrl: '/static/images/nvsheng.jpg',
+      };
+    }
+
+    if (from === 'button') {
+      console.log('handle share logic when user clicking your share button...');
+
+      // customize shared content( optional)
+      return {
+        title: 'share from button',
+        page: '/pages/video/video',
+        imageUrl: '/static/images/nvsheng.jpg',
+      };
+    }
+
+    return {};
+  },
   onPageScroll: function () {},
   //item(index,pagePath,text)
   onTabItemTap: function (item) {},
